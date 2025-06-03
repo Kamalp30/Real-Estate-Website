@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Property Listings</title>
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #3498db;
+      --accent-color: #e74c3c;
+      --light-color: #f8f9fa;
+      --dark-color: #343a40;
+      --text-color: #333;
+      --text-light: #6c757d;
+      --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --border-radius: 8px;
+      --transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text-color);
+      line-height: 1.6;
+      background-color: #f5f7fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Container and general styling */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 15px;
+    }
+
+    h1 {
+      color: var(--primary-color);
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      font-weight: 700;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background-color: var(--secondary-color);
+    }
+
+    /* Search Container */
+    .search-container {
+      background-color: white;
+      padding: 25px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      margin-bottom: 30px;
+    }
+
+    .search-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      font-size: 1rem;
+    }
+
+    .search-button {
+      background-color: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: var(--border-radius);
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      grid-column: 1 / -1;
+    }
+
+    .search-button:hover {
+      background-color: #c0392b;
+      transform: translateY(-2px);
+      box-shadow: var(--box-shadow);
+    }
+
+    /* Error Message */
+    .error-message {
+      background-color: #f8d7da;
+      color: #721c24;
+      padding: 15px;
+      border-radius: var(--border-radius);
+      margin-bottom: 20px;
+    }
+
+    /* Results Info */
+    .results-info {
+      margin-bottom: 20px;
+      color: var(--text-light);
+      font-size: 1.1rem;
+    }
+
+    /* Property Grid */
+    .property-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+
+    .property-card {
+      background: white;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+    }
+
+    .property-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .property-link {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .property-image {
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .property-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .property-card:hover .property-img {
+      transform: scale(1.05);
+    }
+
+    .property-price {
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      background-color: var(--secondary-color);
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .property-details {
+      padding: 20px;
+    }
+
+    .property-address {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+
+    .property-type {
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .property-features {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 10px;
+      color: var(--text-light);
+      font-size: 0.95rem;
+    }
+
+    .property-description {
+      font-size: 0.95rem;
+      color: var(--text-color);
+      margin-bottom: 10px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .property-agent {
+      color: var(--accent-color);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    /* No Results */
+    .no-results {
+      grid-column: 1 / -1;
+      background-color: var(--light-color);
+      padding: 30px;
+      text-align: center;
+      border-radius: var(--border-radius);
+      font-size: 1.1rem;
+      color: var(--text-light);
+    }
+
+    /* Pagination */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .page-link {
+      display: inline-block;
+      padding: 8px 16px;
+      margin: 0 5px;
+      border-radius: var(--border-radius);
+      background-color: white;
+      color: var(--primary-color);
+      text-decoration: none;
+      transition: var(--transition);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .page-link:hover {
+      background-color: var(--secondary-color);
+      color: white;
+    }
+
+    .page-link.active {
+      background-color: var(--secondary-color);
+      color: white;
+    }
+
+    /* Favorite Button */
+
+
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+      .search-form {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .property-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+    }
+
+    @media (max-width: 576px) {
+      .search-form {
+        grid-template-columns: 1fr;
+      }
+
+      .pagination {
+        gap: 5px;
+      }
+
+      .page-link {
+        padding: 6px 12px;
+        margin: 0 2px;
+      }
+    }
+  </style>
+
+
+</head>
+
+<body>
+  <%- include('partials/header') %>
+
+  <div class="container">
+    <h1>Property Listings</h1>
+
+    <!-- Search Form -->
+    <div class="search-container">
+      <form action="/listings" method="GET" class="search-form">
+        <div class="form-group">
+          <label for="location">Location:</label>
+          <input type="text" id="location" name="location" value="<%= searchParams.location || 'London' %>">
+        </div>
+
+        <div class="form-group">
+          <label for="radius">Radius (miles):</label>
+          <select id="radius" name="radius">
+            <option value="1" <%=searchParams.radius==='1' ? 'selected' : '' %>>1 mile</option>
+            <option value="3" <%=searchParams.radius==='3' ? 'selected' : '' %>>3 miles</option>
+            <option value="5" <%=searchParams.radius==='5' ? 'selected' : '' %>>5 miles</option>
+            <option value="10" <%=searchParams.radius==='10' ? 'selected' : '' %>>10 miles</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="minPrice">Min Price (£):</label>
+          <input type="number" id="minPrice" name="minPrice" value="<%= searchParams.minPrice || '0' %>">
+        </div>
+
+        <div class="form-group">
+          <label for="maxPrice">Max Price (£):</label>
+          <input type="number" id="maxPrice" name="maxPrice" value="<%= searchParams.maxPrice || '1000000' %>">
+        </div>
+
+        <div class="form-group">
+          <label for="minBeds">Min Beds:</label>
+          <input type="number" id="minBeds" name="minBeds" min="0" max="10"
+            value="<%= searchParams.minBeds || '0' %>">
+        </div>
+
+        <div class="form-group">
+          <label for="maxBeds">Max Beds:</label>
+          <input type="number" id="maxBeds" name="maxBeds" min="0" max="10"
+            value="<%= searchParams.maxBeds || '5' %>">
+        </div>
+
+        <div class="form-group">
+          <label for="propertyType">Property Type:</label>
+          <select id="propertyType" name="propertyType">
+            <option value="residential" <%=searchParams.propertyType==='residential' ? 'selected' : '' %>>Residential
+            </option>
+            <option value="houses" <%=searchParams.propertyType==='houses' ? 'selected' : '' %>>Houses</option>
+            <option value="flats" <%=searchParams.propertyType==='flats' ? 'selected' : '' %>>Flats</option>
+          </select>
+        </div>
+
+        <button type="submit" class="search-button">Search</button>
+      </form>
+    </div>
+
+    <!-- Error message if API call fails -->
+    <% if (locals.error) { %>
+      <div class="error-message">
+        <p>
+          <%= error %>
+        </p>
+      </div>
+      <% } %>
+
+      <!-- Results count and pagination info -->
+      <% if (locals.totalResults && !locals.error) { %>
+        <div class="results-info">
+          <p>Showing <%= listings.length %> of <%= totalResults %> properties</p>
+        </div>
+        <% } %>
+
+        <!-- Property listings grid -->
+        <div class="property-grid">
+          <% if (locals.listings && listings.length> 0) { %>
+            <% listings.forEach(property=> { %>
+              <div class="property-card">
+                <a href="/listing/<%= property.listing_id %>" class="property-link">
+                  <div class="property-image">
+                    <% if (property.image_url && property.image_url.toString().trim() !== '') { %>
+                      <img src="<%= property.image_url %>" alt="<%= property.displayable_address %>" class="property-img">
+                    <% } else { %>
+                      <img src="/images/placeholder-property.jpg" alt="<%= property.displayable_address %>" class="property-img">
+                    <% } %>
+                    <div class="property-price">£<%= property.price.toLocaleString() %></div>
+                  </div>
+                  <div class="property-details">
+                    <div class="property-address">
+                      <%= property.displayable_address %>
+                    </div>
+                    <div class="property-type">
+                      <%= property.property_type %>
+                    </div>
+                    <div class="property-price">
+                      £<%= property.price.toLocaleString() %>
+                    </div>
+                    <div class="property-features">
+                      <span><i class="fas fa-bed"></i> <%= property.num_bedrooms %> beds</span>
+                      <span><i class="fas fa-bath"></i> <%= property.num_bathrooms %> baths</span>
+                    </div>
+                    <div class="property-description">
+                      <%= property.short_description %>
+                    </div>
+                    <div class="property-agent">
+                      <span>Agent: <%= property.agent_name %></span>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            <% }); %>
+          <% } %>
+        </div>
+
+        <div class="pagination">
+          <% if (currentPage > 1) { %>
+            <a href="/listings?page=<%= currentPage - 1 %>&location=<%= searchParams.location %>&radius=<%= searchParams.radius %>&minPrice=<%= searchParams.minPrice %>&maxPrice=<%= searchParams.maxPrice %>&minBeds=<%= searchParams.minBeds %>&maxBeds=<%= searchParams.maxBeds %>&propertyType=<%= searchParams.propertyType %>" class="page-link">&laquo; Previous</a>
+          <% } %>
+
+          <% for(let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i++) { %>
+            <a href="/listings?page=<%= i %>&location=<%= searchParams.location %>&radius=<%= searchParams.radius %>&minPrice=<%= searchParams.minPrice %>&maxPrice=<%= searchParams.maxPrice %>&minBeds=<%= searchParams.minBeds %>&maxBeds=<%= searchParams.maxBeds %>&propertyType=<%= searchParams.propertyType %>" class="page-link <%= i === currentPage ? 'active' : '' %>"><%= i %></a>
+          <% } %>
+
+          <% if (currentPage < totalPages) { %>
+            <a href="/listings?page=<%= currentPage + 1 %>&location=<%= searchParams.location %>&radius=<%= searchParams.radius %>&minPrice=<%= searchParams.minPrice %>&maxPrice=<%= searchParams.maxPrice %>&minBeds=<%= searchParams.minBeds %>&maxBeds=<%= searchParams.maxBeds %>&propertyType=<%= searchParams.propertyType %>" class="page-link">Next &raquo;</a>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - Business Website</title>
+  <style>
+    .container {
+      width: 80%;
+      margin: 20px auto;
+      text-align: center; /* Center the image and title */
+    }
+    .content {
+      text-align: left; /* Align content to the left */
+      margin-top: 20px;
+    }
+    .about-image {
+      max-width: 500px; /* Adjust as needed */
+      width: 100%;
+      height: auto;
+      margin-top: 10px; /* Space between title and image */
+    }
+  </style>
+</head>
+
+<body>
+  <%- include('partials/header') %>
+
+  <div class="container">
+    <h1>About Us</h1>
+    <img src="https://th.bing.com/th/id/OIP.e1_IIdzBq8phEuVl2pXuuAHaEE?rs=1&pid=ImgDetMain" alt="About Us" class="about-image">
+
+    <div class="content">
+      
+      <p><%= content %></p>
+    </div>
+  </div>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

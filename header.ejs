@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ESTATES</title>
+   <!-- Font Awesome for icons -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   <!-- Google Fonts -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+   <style>
+     :root {
+       --primary-color: #2c3e50;
+       --secondary-color: #3498db;
+       --accent-color: #e74c3c;
+       --light-color: #f8f9fa;
+       --dark-color: #343a40;
+       --text-color: #333;
+       --text-light: #6c757d;
+       --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+       --border-radius: 8px;
+       --transition: all 0.3s ease;
+     }
+ 
+     body {
+       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+       color: var(--text-color);
+       line-height: 1.6;
+       background-color: #f5f7fa;
+       margin: 0;
+       padding: 0;
+     }
+ 
+     /* Header and Navigation */
+     header {
+       background-color: var(--primary-color);
+       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+       position: sticky;
+       top: 0;
+       z-index: 1000;
+     }
+ 
+     .navbar {
+       padding: 15px 0;
+     }
+ 
+     .navbar-dark {
+       background-color: var(--primary-color);
+     }
+ 
+     .logo a {
+       color: white;
+       font-size: 1.8rem;
+       font-weight: 700;
+       text-decoration: none;
+       transition: var(--transition);
+     }
+ 
+     .logo a:hover {
+       color: var(--secondary-color);
+     }
+ 
+     .navbar-nav {
+       display: flex;
+       align-items: center;
+     }
+ 
+     .nav-item {
+       margin: 0 5px;
+     }
+ 
+     .nav-link {
+       color: rgba(255, 255, 255, 0.8) !important;
+       font-weight: 500;
+       padding: 8px 16px;
+       border-radius: 4px;
+       transition: var(--transition);
+     }
+ 
+     .nav-link:hover, .nav-link.active {
+       color: white !important;
+       background-color: rgba(255, 255, 255, 0.1);
+     }
+ 
+     .nav-link i {
+       margin-right: 6px;
+     }
+ 
+     /* Mobile menu toggle */
+     .menu-toggle {
+       width: 30px;
+       height: 22px;
+       position: relative;
+       cursor: pointer;
+     }
+ 
+     .menu-toggle span {
+       display: block;
+       position: absolute;
+       height: 3px;
+       width: 100%;
+       background: white;
+       border-radius: 3px;
+       transition: 0.25s ease-in-out;
+     }
+ 
+     .menu-toggle span:nth-child(1) {
+       top: 0;
+     }
+ 
+     .menu-toggle span:nth-child(2) {
+       top: 9px;
+     }
+ 
+     .menu-toggle span:nth-child(3) {
+       top: 18px;
+     }
+ 
+     .menu-toggle.active span:nth-child(1) {
+       top: 9px;
+       transform: rotate(45deg);
+     }
+ 
+     .menu-toggle.active span:nth-child(2) {
+       opacity: 0;
+     }
+ 
+     .menu-toggle.active span:nth-child(3) {
+       top: 9px;
+       transform: rotate(-45deg);
+     }
+ 
+     /* Footer */
+     footer {
+       background-color: var(--primary-color);
+       color: white;
+       padding: 40px 0 20px;
+       margin-top: 40px;
+     }
+ 
+     .footer-content {
+       display: grid;
+       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+       gap: 30px;
+     }
+ 
+     .footer-section h3 {
+       color: white;
+       margin-bottom: 20px;
+       font-size: 1.4rem;
+       position: relative;
+       padding-bottom: 10px;
+     }
+ 
+     .footer-section h3::after {
+       content: '';
+       position: absolute;
+       bottom: 0;
+       left: 0;
+       width: 40px;
+       height: 3px;
+       background-color: var(--secondary-color);
+     }
+ 
+     .footer-section p {
+       margin-bottom: 15px;
+       color: rgba(255, 255, 255, 0.7);
+     }
+ 
+     .contact-info {
+       list-style: none;
+       padding: 0;
+     }
+ 
+     .contact-info li {
+       display: flex;
+       align-items: center;
+       margin-bottom: 15px;
+     }
+ 
+     .contact-info i {
+       margin-right: 10px;
+       color: var(--secondary-color);
+     }
+ 
+     .social-links a {
+       display: inline-block;
+       width: 40px;
+       height: 40px;
+       background-color: rgba(255, 255, 255, 0.1);
+       border-radius: 50%;
+       text-align: center;
+       line-height: 40px;
+       margin-right: 10px;
+       color: white;
+       transition: var(--transition);
+     }
+ 
+     .social-links a:hover {
+       background-color: var(--secondary-color);
+       transform: translateY(-3px);
+     }
+ 
+     .quick-links {
+       list-style: none;
+       padding: 0;
+     }
+ 
+     .quick-links li {
+       margin-bottom: 10px;
+     }
+ 
+     .quick-links a {
+       color: rgba(255, 255, 255, 0.7);
+       text-decoration: none;
+       transition: var(--transition);
+     }
+ 
+     .quick-links a:hover {
+       color: white;
+       padding-left: 5px;
+     }
+ 
+     .subscribe-form input {
+       width: 100%;
+       padding: 10px;
+       border-radius: var(--border-radius);
+       border: none;
+       margin-bottom: 10px;
+     }
+ 
+     .subscribe-form button {
+       background-color: var(--secondary-color);
+       border: none;
+       width: 100%;
+     }
+ 
+     .copyright {
+       text-align: center;
+       margin-top: 30px;
+       padding-top: 20px;
+       border-top: 1px solid rgba(255, 255, 255, 0.1);
+       color: rgba(255, 255, 255, 0.7);
+     }
+ 
+     /* Responsive adjustments */
+     @media (max-width: 992px) {
+       .navbar-nav {
+         position: fixed;
+         top: 70px;
+         left: 0;
+         width: 100%;
+         background-color: var(--primary-color);
+         flex-direction: column;
+         align-items: flex-start;
+         padding: 20px;
+         transform: translateY(-200%);
+         transition: transform 0.3s ease;
+         z-index: 999;
+       }
+ 
+       .navbar-nav.open {
+         transform: translateY(0);
+       }
+ 
+       .nav-item {
+         width: 100%;
+         margin: 5px 0;
+       }
+ 
+       .property-info {
+         grid-template-columns: 1fr;
+       }
+ 
+       .main-image {
+         height: 300px;
+       }
+     }
+ 
+     @media (max-width: 768px) {
+       h1 {
+         font-size: 2rem;
+       }
+ 
+       .property-header {
+         flex-direction: column;
+       }
+ 
+       .property-price {
+         margin-top: 15px;
+       }
+     }
+ 
+     @media (max-width: 576px) {
+       .search-form {
+         grid-template-columns: 1fr;
+       }
+ 
+       .main-image {
+         height: 250px;
+       }
+     }
+ 
+     /* Loader */
+     .loader {
+       display: none;
+       border: 5px solid #f3f3f3;
+       border-radius: 50%;
+       border-top: 5px solid var(--secondary-color);
+       width: 50px;
+       height: 50px;
+       animation: spin 1s linear infinite;
+       margin: 20px auto;
+     }
+ 
+     @keyframes spin {
+       0% { transform: rotate(0deg); }
+       100% { transform: rotate(360deg); }
+     }
+   </style>
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container">
+        <div class="logo">
+          <a href="/">ESTATES</a>
+        </div>
+
+        <div class="menu-toggle d-lg-none" onclick="toggleMenu()" id="menuToggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a href="/" class="nav-link active"><i class="fas fa-home"></i> Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="/about" class="nav-link"><i class="fas fa-info-circle"></i> About</a>
+          </li>
+          <li class="nav-item">
+            <a href="/listings" class="nav-link"><i class="fas fa-list"></i> Listings</a>
+          </li>
+          <li class="nav-item">
+            <a href="/contact" class="nav-link"><i class="fas fa-envelope"></i> Contact</a>
+          </li>
+          <li class="nav-item">
+            <a href="/mortgageCalculator" class="nav-link"><i class="fas fa-calculator"></i> Mortgage Calculator</a>
+          </li>
+          <% if (user) { %>
+            <li class="nav-item">
+              <a href="/profile" class="nav-link">
+                <i class="fas fa-user-circle"></i> Profile
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/logout" class="nav-link">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </a>
+            </li>
+          <% } else { %>
+            <li class="nav-item">
+              <a href="/login" class="nav-link">
+                <i class="fas fa-sign-in-alt"></i> Sign In
+              </a>
+            </li>
+          <% } %>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <script>
+    function toggleMenu() {
+      const navbarNav = document.querySelector('.navbar-nav');
+      const menuToggle = document.getElementById('menuToggle');
+      navbarNav.classList.toggle('open');
+      menuToggle.classList.toggle('active');
+    }
+  </script>
+</body>
+
+</html>

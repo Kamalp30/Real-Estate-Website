@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mortgage Calculator</title>
+  <style>
+    /* Center the calculator form */
+    .calculator-form {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 40px 30px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+      margin: auto;
+      flex: 1;
+      animation: fadeIn 1s ease-out;
+    }
+
+    /* Title Styling */
+    .calculator-form h2 {
+      font-size: 2.5rem;
+      color: #2c3e50;
+      margin-bottom: 30px;
+      animation: slideInUp 0.5s ease-out;
+    }
+
+    /* Input fields and select styling */
+    .calculator-form input,
+    .calculator-form select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 2px solid #ddd;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .calculator-form input:focus,
+    .calculator-form select:focus {
+      border-color: #feb47b;
+    }
+
+    /* Submit button styling */
+    .calculator-form button {
+      width: 100%;
+      padding: 14px;
+      background-color: #feb47b;
+      color: white;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .calculator-form button:hover {
+      background-color: #f56b2a;
+    }
+
+    /* Result text styling */
+    #mortgageResult,
+    #totalPayment,
+    #apiResult {
+      font-size: 1.2rem;
+      color: #2c3e50;
+      margin-top: 20px;
+      font-weight: bold;
+      opacity: 0;
+      animation: fadeInResult 1s ease-out forwards;
+    }
+
+    .toggle-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .toggle-btn {
+      padding: 10px 15px;
+      background-color: #eee;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .toggle-btn.active {
+      background-color: #feb47b;
+      color: white;
+    }
+
+    .toggle-btn:first-child {
+      border-radius: 8px 0 0 8px;
+    }
+
+    .toggle-btn:last-child {
+      border-radius: 0 8px 8px 0;
+    }
+
+    .calculator-section {
+      display: none;
+    }
+
+    .calculator-section.active {
+      display: block;
+    }
+
+    .loader {
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #feb47b;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 2s linear infinite;
+      margin: 20px auto;
+      display: none;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideInUp {
+      from {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeInResult {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .calculator-form {
+        width: 100%;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body style="background-color: #f5f5f5;">
+  <%- include('partials/header') %>
+
+    <div class="calculator-form">
+      <h2>Mortgage Calculator</h2>
+      
+      <div class="toggle-container">
+        <button id="basicBtn" class="toggle-btn active">Basic Calculator</button>
+        <button id="apiBtn" class="toggle-btn">Zillow Estimate</button>
+      </div>
+
+      <!-- Basic Calculator Section -->
+      <div id="basicCalculator" class="calculator-section active">
+        <form id="mortgageForm">
+          <label for="amount">Loan Amount (£): </label>
+          <input type="number" id="amount" placeholder="Enter loan amount" required>
+
+          <label for="interestRate">Interest Rate (%): </label>
+          <input type="number" id="interestRate" step="0.01" placeholder="Enter interest rate" required>
+
+          <label for="monthsToPay">Months to Pay: </label>
+          <select id="monthsToPay">
+            <option value="12">12 months</option>
+            <option value="24">24 months</option>
+            <option value="36">36 months</option>
+            <option value="48">48 months</option>
+            <option value="60">60 months</option>
+            <option value="120">120 months</option>
+            <option value="180">180 months</option>
+            <option value="240">240 months</option>
+            <option value="300">300 months (25 years)</option>
+            <option value="360">360 months (30 years)</option>
+          </select>
+
+          <button type="submit">Calculate</button>
+        </form>
+        <div id="mortgageResult"></div>
+        <div id="totalPayment"></div>
+      </div>
+
+      <!-- Zillow Estimate Section -->
+      <div id="zillowCalculator" class="calculator-section">
+        <form id="zillowForm">
+          <div class="form-group">
+            <label for="city">Select City:</label>
+            <select id="city" class="form-control" required>
+              <option value="">Select a city...</option>
+              <% if (cities) { %>
+                <% cities.forEach(city => { %>
+                  <option value="<%= city.name %>">
+                    <%= city.name %>, <%= city.country %>
+                  </option>
+                <% }); %>
+              <% } %>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="zpid">Select Land:</label>
+            <select id="zpid" class="form-control" required disabled>
+              <option value="">Select a city first...</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="downPayment">Down Payment (%):</label>
+            <input type="number" id="downPayment" value="20" min="0" max="100" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Calculate Estimate</button>
+        </form>
+
+        <div id="zillowResult" class="result-box">
+          <div id="propertyDetails"></div>
+          <div id="estimateResult"></div>
+        </div>
+      </div>
+
+      <div class="loader"></div>
+
+    </div>
+
+    <%- include('partials/footer') %>
+
+    <!-- Add JS for calculation and API integration -->
+    <script>
+      // Toggle between calculators
+      document.getElementById('basicBtn').addEventListener('click', () => {
+        document.getElementById('basicBtn').classList.add('active');
+        document.getElementById('apiBtn').classList.remove('active');
+        document.getElementById('basicCalculator').classList.add('active');
+        document.getElementById('zillowCalculator').classList.remove('active');
+      });
+
+      document.getElementById('apiBtn').addEventListener('click', () => {
+        document.getElementById('apiBtn').classList.add('active');
+        document.getElementById('basicBtn').classList.remove('active');
+        document.getElementById('zillowCalculator').classList.add('active');
+        document.getElementById('basicCalculator').classList.remove('active');
+      });
+
+      // Basic calculator
+      document.getElementById('mortgageForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const amount = parseFloat(document.getElementById('amount').value);
+        const interestRate = parseFloat(document.getElementById('interestRate').value);
+        const monthsToPay = parseInt(document.getElementById('monthsToPay').value);
+
+        if (isNaN(amount) || isNaN(interestRate) || isNaN(monthsToPay)) {
+          alert('Please fill in all fields with valid numbers');
+          return;
+        }
+
+        const monthlyRate = interestRate / 100 / 12;
+        const monthlyPayment = (amount * monthlyRate * Math.pow(1 + monthlyRate, monthsToPay)) / 
+                             (Math.pow(1 + monthlyRate, monthsToPay) - 1);
+
+        document.getElementById('mortgageResult').textContent = 
+          `Monthly Payment: £${monthlyPayment.toFixed(2)}`;
+        document.getElementById('totalPayment').textContent = 
+          `Total Payment: £${(monthlyPayment * monthsToPay).toFixed(2)}`;
+      });
+
+      // City selection handler
+      document.getElementById('city').addEventListener('change', async (e) => {
+        const city = e.target.value;
+        const zpidSelect = document.getElementById('zpid');
+
+        if (!city) {
+          zpidSelect.innerHTML = '<option value="">Select a city first...</option>';
+          zpidSelect.disabled = true;
+          return;
+        }
+
+        try {
+          const response = await fetch(`/api/properties/${city}`);
+          const properties = await response.json();
+
+          if (!response.ok) {
+            throw new Error(properties.error || 'Failed to fetch properties');
+          }
+
+          // Update the property dropdown
+          zpidSelect.innerHTML = '<option value="">Select a land...</option>';
+          properties.forEach(property => {
+            const option = document.createElement('option');
+            option.value = property.zpid;
+            option.textContent = `${property.address} - £${property.price.toLocaleString()}`;
+            zpidSelect.appendChild(option);
+          });
+
+          zpidSelect.disabled = false;
+        } catch (error) {
+          alert('Error fetching properties: ' + error.message);
+          zpidSelect.innerHTML = '<option value="">Error loading properties</option>';
+          zpidSelect.disabled = true;
+        }
+      });
+
+      // Zillow estimate calculator
+      document.getElementById('zillowForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const zpid = document.getElementById('zpid').value;
+        const downPayment = document.getElementById('downPayment').value;
+
+        if (!zpid || isNaN(downPayment)) {
+          alert('Please select a property and enter a valid down payment');
+          return;
+        }
+
+        // Show loader
+        const loader = document.querySelector('.loader');
+        loader.style.display = 'block';
+
+        try {
+          const response = await fetch('/api/zillowEstimate', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              zpid,
+              downPayment
+            }),
+          });
+
+          const data = await response.json();
+
+          if (data.error) {
+            throw new Error(data.error);
+          }
+
+          // Display property details
+          const propertyDetails = document.getElementById('propertyDetails');
+          propertyDetails.innerHTML = `
+            <h3>Property Details</h3>
+            <p>Address: ${data.property.address}</p>
+            <p>Price: £${data.property.price.toLocaleString()}</p>
+            <p>Down Payment: £${data.downPaymentAmount.toLocaleString()}</p>
+            <p>Loan Amount: £${data.loanAmount.toLocaleString()}</p>
+          `;
+
+          // Display estimate result
+          const estimateResult = document.getElementById('estimateResult');
+          estimateResult.innerHTML = `
+            <h3>Mortgage Estimate</h3>
+            <p>Monthly Payment: £${data.monthlyPayment}</p>
+            <p>Interest Rate: 4.5%</p>
+            <p>Loan Term: 30 years</p>
+          `;
+
+          // Show result box
+          const resultBox = document.getElementById('zillowResult');
+          resultBox.classList.add('show');
+        } catch (error) {
+          alert('Error calculating estimate: ' + error.message);
+        } finally {
+          // Hide loader
+          loader.style.display = 'none';
+        }
+      });
+    </script>
+</body>
+
+</html>

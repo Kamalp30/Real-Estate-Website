@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    Property Details
+  </title>
+  <style>.property-details-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+/* Header */
+.property-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 25px 50px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.property-header .property-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+.property-header .property-location {
+    font-size: 1rem;
+    color: #777;
+}
+
+.property-header .property-price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #27ae60;
+}
+
+/* Main Image Styling */
+.property-images {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.main-image {
+    width: 95%;
+    max-width: 900px;
+    height: auto;
+    border-radius: 18px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.main-image:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Image Gallery */
+.image-gallery {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 15px 0;
+}
+
+.image-gallery img {
+    width: 100px;
+    height: 75px;
+    object-fit: cover;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.3s ease, border 0.3s ease;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.image-gallery img:hover {
+    transform: scale(1.1);
+    border: 3px solid #3498db;
+}
+
+/* Property Details Section */
+.property-info {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.property-description {
+    padding-right: 30px;
+}
+
+.property-description h2,
+.property-features h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+.property-features {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.property-features ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.property-features li {
+    font-size: 1.15em;
+    color: #555;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.property-features li strong {
+    font-weight: 600;
+    color: #333;
+}
+
+.agent-info {
+    margin-top: 30px;
+    background-color: #ecf0f1;
+    padding: 25px;
+    border-radius: 10px;
+}
+
+.contact-button {
+    background-color: #3498db;
+    color: white;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    font-size: 1.1em;
+}
+
+.contact-button:hover {
+    background-color: #2980b9;
+}
+
+/* Floor Plan Section */
+.floorplan-container {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.floorplan-container img {
+    max-width: 90%;
+    border-radius: 15px;
+    margin-top: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Error Messages */
+.error-message {
+    background-color: #ffe6e6;
+    color: #e74c3c;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 40px;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.error-message a {
+    color: #e74c3c;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .property-header {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .property-header .property-title {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .property-info {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .property-description,
+    .property-features {
+        padding-right: 0;
+    }
+}
+</style></style>
+</head>
+
+<body>
+  <%- include('partials/header') %>
+
+    <div class="property-details-container">
+      <% if (locals.error) { %>
+        <div class="error-message">
+          <p>
+            <%= error %>
+          </p>
+          <a href="/listings">Return to listings</a>
+        </div>
+        <% } else if (property) { %>
+          <div class="property-header">
+            <div>
+              <!-- Updated title to include property address -->
+              <h1>
+                <%= (typeof property.address === 'object' ? 
+                      (property.address.street || '') + ' ' + (property.address.city || '') : 
+                      property.address) || property.displayable_address || 'Property' %>
+              </h1>
+              <p class="property-location">
+                <%= property.city || '' %>
+                <%= property.zipcode || property.postalCode || '' %>
+              </p>
+            </div>
+            <div class="property-price">£<%= (property.price || 0).toLocaleString() %>
+            </div>
+          </div>
+
+          <div class="property-images">
+            <% let mainImageSrc=property.imgSrc || property.primaryImageUrl || '/images/placeholder-property.jpg' ; %>
+              <img src="<%= mainImageSrc %>" alt="<%= property.address %>" class="main-image" id="mainImage"
+                onerror="this.src='/images/placeholder-property.jpg'">
+
+              <div class="image-gallery" id="imageGallery">
+                <img src="<%= mainImageSrc %>" alt="Thumbnail" class="thumbnail" onclick="changeMainImage(this.src)"
+                  onerror="this.src='/images/placeholder-property.jpg'">
+              </div>
+          </div>
+
+          <div class="property-info">
+            <div class="property-description">
+              <h2>About This Property</h2>
+              <p>
+                <%= property.description || 'No description available for this property.' %>
+              </p>
+
+              <div class="floorplan-container">
+                <h2>Floor Plan</h2>
+                <div id="floorPlanContainer">
+                  <p>Loading floor plan...</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="property-features">
+              <h2>Property Details</h2>
+              <ul>
+                <li><strong>Bedrooms:</strong>
+                  <%= property.bedrooms || property.numBedrooms || 'N/A' %>
+                </li>
+                <li><strong>Bathrooms:</strong>
+                  <%= property.bathrooms || property.numBathrooms || 'N/A' %>
+                </li>
+                <li><strong>Reception Rooms:</strong>
+                  <%= property.receptionRooms || 'N/A' %>
+                </li>
+                <li><strong>Property Type:</strong>
+                  <%= property.homeType || property.propertyType || 'N/A' %>
+                </li>
+                <li><strong>Year Built:</strong>
+                  <%= property.yearBuilt || 'N/A' %>
+                </li>
+                <li><strong>Living Area:</strong>
+                  <%= property.livingArea ? property.livingArea + ' sq ft' : 'N/A' %>
+                </li>
+                <li><strong>Lot Size:</strong>
+                  <%= property.lotSize ? property.lotSize + ' sq ft' : 'N/A' %>
+                </li>
+              </ul>
+
+              <div class="agent-info">
+                <h3>Contact Agent</h3>
+                <p><strong>
+                    <%= property.brokerName || 'Agent' %>
+                  </strong></p>
+                <p>Phone: <%= property.brokerPhone || 'Contact information unavailable' %>
+                </p>
+                <button onclick="location.href='mailto:<%= property.brokerEmail || '' %>'" class="contact-button">Send
+                  Email</button>
+              </div>
+              
+              <!-- Add Mortgage Calculator Button -->
+              <div class="mortgage-calculator-link">
+                <button onclick="location.href='/mortgageCalculator?zpid=<%= property.zpid || property.listing_id %>&price=<%= property.price || 0 %>'" class="contact-button">
+                  Calculate Mortgage
+                </button>
+              </div>
+            </div>
+          </div>
+          <% } else { %>
+            <div class="error-message">
+              <p>Property information not available.</p>
+              <a href="/listings">Return to listings</a>
+            </div>
+            <% } %>
+    </div>
+
+    <%- include('partials/footer') %>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          const propertyId = '<%= property ? (property.zpid || property.listing_id) : "" %>';
+
+          if (propertyId) {
+            // Load additional images
+            fetch(`/propertyImages/${propertyId}`)
+              .then(response => response.json())
+              .then(data => {
+                const gallery = document.getElementById('imageGallery');
+                if (data && data.images && data.images.length > 0) {
+                  gallery.innerHTML = '';
+                  data.images.forEach(imgUrl => {
+                    const thumbnail = document.createElement('img');
+                    thumbnail.src = imgUrl;
+                    thumbnail.alt = 'Property image';
+                    thumbnail.className = 'thumbnail';
+                    thumbnail.onclick = function () { changeMainImage(this.src); };
+                    thumbnail.onerror = function () { this.src = '/images/placeholder-property.jpg'; };
+                    gallery.appendChild(thumbnail);
+                  });
+                  if (data.images[0]) {
+                    document.getElementById('mainImage').src = data.images[0];
+                  }
+                }
+              })
+              .catch(error => console.error('Error loading property images:', error));
+
+            // Load floor plan
+            fetch(`/propertyFloorPlan/${propertyId}`)
+              .then(response => response.json())
+              .then(data => {
+                const floorPlanContainer = document.getElementById('floorPlanContainer');
+                if (data && data.floorPlans && data.floorPlans.length > 0) {
+                  floorPlanContainer.innerHTML = '';
+                  data.floorPlans.forEach(plan => {
+                    const img = document.createElement('img');
+                    img.src = plan.url;
+                    img.alt = 'Floor plan';
+                    img.className = 'floorplan-image';
+                    img.onerror = function () {
+                      this.style.display = 'none';
+                      floorPlanContainer.innerHTML = '<p>Floor plan image not available.</p>';
+                    };
+                    floorPlanContainer.appendChild(img);
+                  });
+                } else {
+                  floorPlanContainer.innerHTML = '<p>No floor plan available for this property.</p>';
+                }
+              })
+              .catch(error => {
+                console.error('Error loading floor plan:', error);
+                document.getElementById('floorPlanContainer').innerHTML = '<p>Unable to load floor plan.</p>';
+              });
+          }
+        });
+
+        function changeMainImage(src) {
+          document.getElementById('mainImage').src = src;
+        }
+      </script>
+</body>
+
+</html>

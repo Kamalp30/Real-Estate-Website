@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home - ESTATES</title>
+
+  <style>
+    :root {
+  --primary-color: #2c3e50;
+  --secondary-color: #3498db;
+  --accent-color: #e74c3c;
+  --light-color: #f8f9fa;
+  --dark-color: #343a40;
+  --text-color: #333;
+  --text-light: #6c757d;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --border-radius: 8px;
+  --transition: all 0.3s ease;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-color);
+  line-height: 1.6;
+  background-color: #f5f7fa;
+  margin: 0;
+  padding: 0;
+}
+
+/* Container and general styling */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 15px;
+}
+
+h1 {
+  color: var(--primary-color);
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  font-weight: 700;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background-color: var(--secondary-color);
+}
+
+h2 {
+  color: var(--primary-color);
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+/* Featured Listings Carousel */
+.carousel {
+  margin-bottom: 40px;
+  box-shadow: var(--box-shadow);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.carousel-item .row {
+  background-color: white;
+  padding: 20px;
+}
+
+.carousel-item img {
+  border-radius: var(--border-radius);
+  height: 250px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.carousel-control-prev, .carousel-control-next {
+  width: 5%;
+  opacity: 0.7;
+}
+
+.carousel-control-prev:hover, .carousel-control-next:hover {
+  opacity: 1;
+}
+
+/* Property badges and details */
+.property-badge {
+  display: inline-block;
+  background-color: var(--secondary-color);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.listing-detail {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.listing-detail i {
+  color: var(--secondary-color);
+  margin-right: 8px;
+  width: 20px;
+  text-align: center;
+}
+
+.listing-detail strong {
+  color: var(--accent-color);
+  font-size: 1.2rem;
+}
+
+/* Latest Listings section */
+.latest-listings {
+  margin-top: 50px;
+}
+
+.listing-item {
+  background: white;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--box-shadow);
+  transition: var(--transition);
+  height: 100%;
+}
+
+.listing-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.listing-item a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.listing-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.listing-item:hover img {
+  transform: scale(1.05);
+}
+
+.listing-content {
+  padding: 20px;
+}
+
+.listing-content h5 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.listing-content p {
+  font-size: 0.95rem;
+  color: var(--text-color);
+  margin-bottom: 10px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.price {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  margin-top: 10px;
+}
+
+/* Recommendation System Styles */
+.recommendation-section {
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 30px;
+  margin-bottom: 40px;
+}
+
+.recommendation-title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.recommendation-title i {
+  color: var(--secondary-color);
+  font-size: 1.8rem;
+  margin-right: 10px;
+}
+
+/* Chat-like AI assistant interface */
+.chat-container {
+  background-color: var(--light-color);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  margin-bottom: 20px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.chat-messages {
+  margin-bottom: 20px;
+}
+
+.message {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.ai-message {
+  flex-direction: row;
+}
+
+.user-message {
+  flex-direction: row-reverse;
+}
+
+.message-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ai-message .message-avatar {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.user-message .message-avatar {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.message-content {
+  padding: 12px 15px;
+  border-radius: 18px;
+  margin: 0 10px;
+  max-width: 75%;
+}
+
+.ai-message .message-content {
+  background-color: white;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  border-top-left-radius: 0;
+}
+
+.user-message .message-content {
+  background-color: var(--secondary-color);
+  color: white;
+  border-top-right-radius: 0;
+}
+
+.typing-indicator {
+  display: flex;
+  padding: 5px 0;
+}
+
+.typing-indicator span {
+  height: 8px;
+  width: 8px;
+  float: left;
+  margin: 0 1px;
+  background-color: #9E9EA1;
+  display: block;
+  border-radius: 50%;
+  opacity: 0.4;
+  animation: typing 1s infinite;
+}
+
+.typing-indicator span:nth-of-type(1) {
+  animation-delay: 0s;
+}
+
+.typing-indicator span:nth-of-type(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-of-type(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typing {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.current-question {
+  background-color: white;
+  padding: 20px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.question-text {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 15px;
+  color: var(--primary-color);
+}
+
+.answer-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.answer-option {
+  background-color: #f0f5ff;
+  border: 1px solid #d0e1ff;
+  color: var(--secondary-color);
+  font-weight: 500;
+  padding: 10px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.answer-option:hover {
+  background-color: #e0edff;
+  transform: translateY(-2px);
+}
+
+.answer-option.selected {
+  background-color: var(--secondary-color);
+  color: white;
+  border-color: var(--secondary-color);
+}
+
+.recommendation-results {
+  margin-top: 30px;
+  display: none;
+}
+
+.recommendation-results.show {
+  display: block;
+}
+
+.ai-recommendation-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.ai-recommendation-header i {
+  font-size: 1.5rem;
+  color: #ffc107;
+  margin-right: 10px;
+}
+
+.restart-search {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.btn-restart {
+  background-color: #f5f7fa;
+  color: var(--text-color);
+  border: 1px solid #e0e4e9;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-restart:hover {
+  background-color: #e5e9ef;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .carousel-item img {
+    height: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+  
+  .carousel-item .row {
+    flex-direction: column;
+  }
+  
+  .carousel-item .col-md-5,
+  .carousel-item .col-md-7 {
+    width: 100%;
+  }
+  
+  .carousel-item img {
+    margin-bottom: 15px;
+  }
+  
+  .form-col {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: 15px 10px;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+}
+  </style>
+</head>
+
+<body>
+  <%- include('partials/header') %>
+
+  <div class="container">
+    <h1>Welcome to Estates</h1>
+    
+    <!-- AI Property Recommendation System -->
+    <div class="recommendation-section">
+      <div class="recommendation-title">
+        <i class="fas fa-robot"></i>
+        <h2>AI Property Finder</h2>
+      </div>
+      
+      <div id="chatContainer" class="chat-container">
+        <div class="chat-messages" id="chatMessages">
+          <div class="message ai-message">
+            <div class="message-avatar">
+              <i class="fas fa-robot"></i>
+            </div>
+            <div class="message-content">
+              <p>Hi there! I'm your AI property assistant. I can help you find your dream property. Let's start with a few questions.</p>
+              <div class="typing-indicator">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div id="currentQuestion" class="current-question">
+          <div class="question-text">What type of property are you looking for?</div>
+          <div class="answer-options">
+            <button class="answer-option" data-value="house" data-type="propertyType">House</button>
+            <button class="answer-option" data-value="apartment" data-type="propertyType">Apartment</button>
+            <button class="answer-option" data-value="condo" data-type="propertyType">Condo</button>
+            <button class="answer-option" data-value="townhouse" data-type="propertyType">Townhouse</button>
+            <button class="answer-option" data-value="" data-type="propertyType">No preference</button>
+          </div>
+        </div>
+      </div>
+      
+      <div id="recommendationResults" class="recommendation-results">
+        <div class="ai-recommendation-header">
+          <i class="fas fa-lightbulb"></i>
+          <h3>Your Perfect Matches</h3>
+        </div>
+        <div class="row" id="recommendedPropertiesContainer">
+          <!-- Recommended properties will be displayed here -->
+        </div>
+        <div class="restart-search">
+          <button id="restartSearchBtn" class="btn-restart">
+            <i class="fas fa-redo"></i> Start New Search
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Featured Listings Section (Carousel) -->
+    <h2>Featured Listings</h2>
+    <div id="featuredListingsCarousel" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <% listings.forEach((listing, index) => { %>
+          <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+            <div class="row align-items-center">
+              <div class="col-md-5">
+                <img src="<%= listing.image_url %>" class="d-block w-100" alt="<%= listing.displayable_address %>">
+              </div>
+              <div class="col-md-7">
+                <span class="property-badge"><%= listing.property_type %></span>
+                <h5><%= listing.displayable_address %></h5>
+                <p><%= listing.short_description %></p>
+                <div class="listing-detail">
+                  <i class="fas fa-tag"></i>
+                  <strong><%= listing.price %></strong>
+                </div>
+                <div class="listing-detail">
+                  <i class="fas fa-bed"></i>
+                  <span><%= listing.num_bedrooms %> Bedrooms</span>
+                </div>
+                <div class="listing-detail">
+                  <i class="fas fa-bath"></i>
+                  <span><%= listing.num_bathrooms %> Bathrooms</span>
+                </div>
+                <div class="listing-detail">
+                  <i class="fas fa-home"></i>
+                  <span><%= listing.property_type %></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+      <a class="carousel-control-prev" href="#featuredListingsCarousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#featuredListingsCarousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+
+    <!-- Latest Listings Section -->
+    <div class="latest-listings">
+      <h2>Latest Listings</h2>
+      <div class="row">
+        <% latestListings.forEach((listing) => { %>
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="listing-item">
+              <a href="/listing/<%= listing.listing_id %>">
+                <img src="<%= listing.image_url %>" alt="<%= listing.displayable_address %>">
+                <div class="listing-content">
+                  <span class="property-badge"><%= listing.property_type %></span>
+                  <h5><%= listing.displayable_address %></h5>
+                  <p><%= listing.short_description %></p>
+                  <div class="listing-detail">
+                    <i class="fas fa-bed"></i>
+                    <span><%= listing.num_bedrooms %> Bedrooms</span>
+                  </div>
+                  <div class="listing-detail">
+                    <i class="fas fa-bath"></i>
+                    <span><%= listing.num_bathrooms %> Bathrooms</span>
+                  </div>
+                  <div class="price"><%= listing.price %></div>
+                </div>
+              </a>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+
+  <%- include('partials/footer') %>
+
+  <!-- Include Bootstrap JS and jQuery for carousel functionality -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.6/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+  <!-- Font Awesome for icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  
+  <!-- Recommendation System Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get DOM elements
+      const chatMessages = document.getElementById('chatMessages');
+      const currentQuestion = document.getElementById('currentQuestion');
+      const recommendationResults = document.getElementById('recommendationResults');
+      const recommendedPropertiesContainer = document.getElementById('recommendedPropertiesContainer');
+      const restartSearchBtn = document.getElementById('restartSearchBtn');
+      
+      // Questions sequence for the AI assistant
+      const questions = [
+        {
+          text: "What type of property are you looking for?",
+          type: "propertyType",
+          options: [
+            { value: "house", label: "House" },
+            { value: "apartment", label: "Apartment" },
+            { value: "condo", label: "Condo" },
+            { value: "townhouse", label: "Townhouse" },
+            { value: "", label: "No preference" }
+          ]
+        },
+        {
+          text: "How many bedrooms do you need?",
+          type: "bedrooms",
+          options: [
+            { value: "1", label: "1+ Bedroom" },
+            { value: "2", label: "2+ Bedrooms" },
+            { value: "3", label: "3+ Bedrooms" },
+            { value: "4", label: "4+ Bedrooms" }
+          ]
+        },
+        {
+          text: "What's your budget range?",
+          type: "priceRange",
+          options: [
+            { value: "0-100000", label: "Under $100,000" },
+            { value: "100000-250000", label: "$100,000 - $250,000" },
+            { value: "250000-500000", label: "$250,000 - $500,000" },
+            { value: "500000-1000000", label: "$500,000 - $1,000,000" },
+            { value: "1000000+", label: "$1,000,000+" }
+          ]
+        },
+        {
+          text: "Do you have a location preference?",
+          type: "location",
+          options: [
+            { value: "downtown", label: "Downtown" },
+            { value: "suburbs", label: "Suburbs" },
+            { value: "countryside", label: "Countryside" },
+            { value: "beachfront", label: "Beachfront" },
+            { value: "", label: "No preference" }
+          ]
+        },
+        {
+          text: "Any special features you're looking for?",
+          type: "features",
+          options: [
+            { value: "garden", label: "Garden/Yard" },
+            { value: "garage", label: "Garage" },
+            { value: "pool", label: "Swimming Pool" },
+            { value: "", label: "None of these" }
+          ],
+          multiSelect: true
+        }
+      ];
+      
+      // Current question index
+      let currentQuestionIndex = 0;
+      
+      // User's answers
+      const userAnswers = {
+        propertyType: "",
+        bedrooms: "1",
+        priceRange: "0-100000",
+        location: "",
+        features: []
+      };
+      
+      // Helper function to get random location (for demo purposes)
+      function getRandomLocation() {
+        const locations = ['downtown', 'suburbs', 'countryside', 'beachfront'];
+        return locations[Math.floor(Math.random() * locations.length)];
+      }
+      
+      // Helper function to get random features (for demo purposes)
+      function getRandomFeatures() {
+        const features = [];
+        if (Math.random() > 0.5) features.push('garden');
+        if (Math.random() > 0.5) features.push('garage');
+        if (Math.random() > 0.7) features.push('pool');
+        return features;
+      }
+      
+      // Initialize the first question
+      updateCurrentQuestion();
+      
+      // Add click event to answer options
+      document.addEventListener('click', function(event) {
+        if (event.target.classList.contains('answer-option')) {
+          handleAnswerSelection(event.target);
+        }
+      });
+      
+      // Add click event to restart button
+      restartSearchBtn.addEventListener('click', function() {
+        restartSearch();
+      });
+      
+      // Handle answer selection
+      function handleAnswerSelection(selectedOption) {
+        const answerType = selectedOption.dataset.type;
+        const answerValue = selectedOption.dataset.value;
+        const currentQuestion = questions[currentQuestionIndex];
+        
+        // For multi-select questions
+        if (currentQuestion.multiSelect) {
+          if (answerValue === "") {
+            // If "None of these" is selected, clear all features
+            userAnswers[answerType] = [];
+            
+            // Remove 'selected' class from all options
+            document.querySelectorAll('.answer-option').forEach(option => {
+              option.classList.remove('selected');
+            });
+            
+            // Add 'selected' class to the "None of these" option
+            selectedOption.classList.add('selected');
+          } else {
+            // Remove "None of these" from selection if it was previously selected
+            const noneOption = document.querySelector('.answer-option[data-value=""][data-type="' + answerType + '"]');
+            if (noneOption) noneOption.classList.remove('selected');
+            
+            // Toggle selection for this option
+            selectedOption.classList.toggle('selected');
+            
+            // Update features array
+            if (selectedOption.classList.contains('selected')) {
+              if (!userAnswers[answerType].includes(answerValue)) {
+                userAnswers[answerType].push(answerValue);
+              }
+            } else {
+              userAnswers[answerType] = userAnswers[answerType].filter(value => value !== answerValue);
+            }
+          }
+        } else {
+          // For single-select questions
+          userAnswers[answerType] = answerValue;
+          
+          // Update selected state
+          document.querySelectorAll('.answer-option').forEach(option => {
+            option.classList.remove('selected');
+          });
+          selectedOption.classList.add('selected');
+        }
+        
+        // Add user message to chat
+        addMessageToChat('user', selectedOption.textContent);
+        
+        // Wait a moment before proceeding to next question
+        setTimeout(function() {
+          // Proceed to next question or show results
+          if (currentQuestionIndex < questions.length - 1) {
+            currentQuestionIndex++;
+            
+            // Show typing indicator before showing next question
+            showTypingIndicator();
+            
+            setTimeout(function() {
+              updateCurrentQuestion();
+            }, 1000);
+          } else {
+            // We've reached the end of questions, show results
+            showTypingIndicator();
+            
+            setTimeout(function() {
+              addMessageToChat('ai', "Great! Based on your preferences, here are some properties I think you'll love:");
+              showRecommendations();
+            }, 1500);
+          }
+        }, 500);
+      }
+      
+      // Update the current question display
+      function updateCurrentQuestion() {
+        const question = questions[currentQuestionIndex];
+        
+        // Add AI message with the question
+        addMessageToChat('ai', question.text);
+        
+        // Update current question display
+        document.querySelector('.question-text').textContent = question.text;
+        
+        // Clear previous options
+        const answerOptionsContainer = document.querySelector('.answer-options');
+        answerOptionsContainer.innerHTML = '';
+        
+        // Add new options
+        question.options.forEach(option => {
+          const buttonEl = document.createElement('button');
+          buttonEl.className = 'answer-option';
+          buttonEl.dataset.value = option.value;
+          buttonEl.dataset.type = question.type;
+          buttonEl.textContent = option.label;
+          
+          // For multi-select, pre-select options that are already in userAnswers
+          if (question.multiSelect && userAnswers[question.type].includes(option.value)) {
+            buttonEl.classList.add('selected');
+          }
+          
+          answerOptionsContainer.appendChild(buttonEl);
+        });
+      }
+      
+      // Add a message to the chat
+      function addMessageToChat(sender, text) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message ' + (sender === 'ai' ? 'ai-message' : 'user-message');
+        
+        const avatarDiv = document.createElement('div');
+        avatarDiv.className = 'message-avatar';
+        avatarDiv.innerHTML = sender === 'ai' ? '<i class="fas fa-robot"></i>' : '<i class="fas fa-user"></i>';
+        
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'message-content';
+        contentDiv.innerHTML = '<p>' + text + '</p>';
+        
+        messageDiv.appendChild(avatarDiv);
+        messageDiv.appendChild(contentDiv);
+        
+        chatMessages.appendChild(messageDiv);
+        
+        // Scroll to bottom of chat
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+      
+      // Show typing indicator
+      function showTypingIndicator() {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message ai-message typing-message';
+        messageDiv.innerHTML = `
+          <div class="message-avatar">
+            <i class="fas fa-robot"></i>
+          </div>
+          <div class="message-content">
+            <div class="typing-indicator">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        `;
+        
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        
+        // Remove typing indicator after a delay
+        setTimeout(function() {
+          const typingMessage = document.querySelector('.typing-message');
+          if (typingMessage) {
+            typingMessage.remove();
+          }
+        }, 1000);
+      }
+      
+      // Show property recommendations
+      function showRecommendations() {
+        // Hide current question
+        currentQuestion.style.display = 'none';
+        
+        // Filter properties based on user answers
+        const filteredProperties = allProperties.filter(property => {
+          // Filter by property type if selected
+          if (userAnswers.propertyType && property.propertyType !== userAnswers.propertyType) {
+            return false;
+          }
+          
+          // Filter by minimum bedrooms
+          if (property.bedrooms < parseInt(userAnswers.bedrooms)) {
+            return false;
+          }
+          
+          // Filter by price (simplified for demo)
+          const propertyPrice = parseInt(property.price.replace(/[^0-9.-]+/g, ''));
+          let minPrice = 0;
+          let maxPrice = Infinity;
+          
+          if (userAnswers.priceRange) {
+            const rangeParts = userAnswers.priceRange.split('-');
+            minPrice = parseInt(rangeParts[0]);
+            if (rangeParts[1] && !rangeParts[1].includes('+')) {
+              maxPrice = parseInt(rangeParts[1]);
+            }
+          }
+          
+          if (propertyPrice < minPrice || propertyPrice > maxPrice) {
+            return false;
+          }
+          
+          // Filter by location if selected
+          if (userAnswers.location && property.location !== userAnswers.location) {
+            return false;
+          }
+          
+          // Filter by features
+          for (const feature of userAnswers.features) {
+            if (!property.features.includes(feature)) {
+              return false;
+            }
+          }
+          
+          return true;
+        });
+        
+        // Display filtered properties (up to 3)
+        displayRecommendations(filteredProperties.slice(0, 3));
+      }
+      
+      // Show property recommendations based on user answers
+      async function showRecommendations() {
+        // Show loading state
+        currentQuestion.style.display = 'none';
+        recommendedPropertiesContainer.innerHTML = `
+          <div class="col-12 text-center py-4">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2">Finding the best properties for you...</p>
+          </div>`;
+        recommendationResults.classList.add('show');
+        
+        try {
+          // Build query parameters
+          const params = new URLSearchParams();
+          if (userAnswers.propertyType) params.append('propertyType', userAnswers.propertyType);
+          if (userAnswers.bedrooms) params.append('bedrooms', userAnswers.bedrooms);
+          if (userAnswers.priceRange) params.append('priceRange', userAnswers.priceRange);
+          if (userAnswers.location) params.append('location', userAnswers.location);
+          if (userAnswers.features?.length) {
+            userAnswers.features.forEach(feature => params.append('features', feature));
+          }
+          
+          // Fetch recommendations from the backend
+          const response = await fetch(`/api/recommendations?${params.toString()}`);
+          const data = await response.json();
+          
+          if (!response.ok || !data.success) {
+            throw new Error(data.error || 'Failed to fetch recommendations');
+          }
+          
+          // Display the recommended properties
+          displayRecommendations(data.properties || []);
+          
+        } catch (error) {
+          console.error('Error in showRecommendations:', error);
+          recommendedPropertiesContainer.innerHTML = `
+            <div class="col-12">
+              <div class="alert alert-danger">
+                <p>Sorry, there was an error processing your request. Please try again later.</p>
+                <p class="small text-muted">${error.message}</p>
+              </div>
+              <button class="btn btn-primary mt-3" onclick="restartSearch()">
+                <i class="fas fa-redo me-2"></i>Try Again
+              </button>
+            </div>`;
+        }
+      }
+      
+      // Function to display recommended properties
+      function displayRecommendations(properties) {
+        try {
+          // Clear previous results
+          recommendedPropertiesContainer.innerHTML = '';
+          
+          if (!Array.isArray(properties) || properties.length === 0) {
+            recommendedPropertiesContainer.innerHTML = 
+              '<div class="col-12"><p>No properties match your criteria. Try adjusting your preferences.</p></div>';
+          } else {
+            // Add each property to the results
+            properties.forEach(property => {
+              if (!property) return;
+              
+              // Ensure all required properties have values
+              const safeProperty = {
+                id: property.id || '',
+                image: property.image || '/images/default-property.jpg',
+                address: property.address || 'Address not available',
+                description: property.description || 'No description available',
+                price: property.price || 'Price on request',
+                bedrooms: property.bedrooms || 0,
+                bathrooms: property.bathrooms || 0,
+                propertyType: (property.propertyType || 'unknown').toLowerCase(),
+                features: Array.isArray(property.features) ? property.features : []
+              };
+              
+              const propertyHtml = `
+                <div class="col-lg-4 col-md-6 mb-4">
+                  <div class="listing-item">
+                    <a href="/listing/${encodeURIComponent(safeProperty.id)}">
+                      <img src="${safeProperty.image}" alt="${safeProperty.address.replace(/"/g, '&quot;')}" 
+                           onerror="this.onerror=null; this.src='/images/default-property.jpg';">
+                      <div class="listing-content">
+                        <span class="property-badge">${safeProperty.propertyType.toUpperCase()}</span>
+                        <h5>${safeProperty.address.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</h5>
+                        <p>${safeProperty.description.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
+                        <div class="listing-detail">
+                          <i class="fas fa-bed"></i>
+                          <span>${safeProperty.bedrooms} Bedroom${safeProperty.bedrooms !== 1 ? 's' : ''}</span>
+                        </div>
+                        <div class="listing-detail">
+                          <i class="fas fa-bath"></i>
+                          <span>${safeProperty.bathrooms} Bathroom${safeProperty.bathrooms !== 1 ? 's' : ''}</span>
+                        </div>
+                        <div class="price">${safeProperty.price.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              `;
+              recommendedPropertiesContainer.insertAdjacentHTML('beforeend', propertyHtml);
+            });
+          }
+          
+          // Show the results section
+          recommendationResults.classList.add('show');
+          
+        } catch (error) {
+          console.error('Error in displayRecommendations:', error);
+          recommendedPropertiesContainer.innerHTML = `
+            <div class="col-12">
+              <p>Sorry, there was an error displaying the properties.</p>
+              <p>${error.message}</p>
+            </div>`;
+          recommendationResults.classList.add('show');
+        }
+      }
+      
+      // Restart the search process
+      function restartSearch() {
+        // Reset current question index
+        currentQuestionIndex = 0;
+        
+        // Reset user answers
+        userAnswers.propertyType = "";
+        userAnswers.bedrooms = "1";
+        userAnswers.priceRange = "0-100000";
+        userAnswers.location = "";
+        userAnswers.features = [];
+        
+        // Clear chat messages except the first one
+        while (chatMessages.children.length > 1) {
+          chatMessages.removeChild(chatMessages.lastChild);
+        }
+        
+        // Show current question again
+        currentQuestion.style.display = 'block';
+        
+        // Hide results
+        recommendationResults.classList.remove('show');
+        
+        // Update question display
+        updateCurrentQuestion();
+      }
+    });
+  </script>
+</body>
+
+</html>
